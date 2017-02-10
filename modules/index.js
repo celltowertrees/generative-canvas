@@ -1,1 +1,1 @@
-import {boring} from './import';
+import './import';
