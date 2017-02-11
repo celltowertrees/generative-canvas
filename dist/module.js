@@ -5,10 +5,12 @@
 
 'use strict';
 
-var squareWidth = undefined,
-    squareOffsetLeft = undefined,
-    squareOffsetTop = undefined,
-    squareOffsetBottom = undefined,
+var rectWidth = undefined,
+    rectHeight = undefined,
+    rectOffsetLeft = undefined,
+    rectOffsetTop = undefined,
+    rectOffsetBottom = undefined,
+    opacity = undefined,
     canvasDimensions = 500,
     canvasMidpoint = canvasDimensions / 2;
 
@@ -17,11 +19,13 @@ function getRandomNumber(min, max) {
 }
 
 function reset() {
-	squareWidth = getRandomNumber(10, canvasDimensions - 5);
-	squareOffsetLeft = getRandomNumber(5, canvasDimensions - squareWidth - 5);
-	// squareOffsetLeft = canvasMidpoint - (squareWidth / 2);
-	squareOffsetTop = 5;
-	squareOffsetBottom = canvasDimensions - squareWidth;
+	opacity = getRandomNumber(1, 0.7);
+	rectWidth = getRandomNumber(10, 100);
+	rectHeight = getRandomNumber(10, canvasDimensions - 5);
+	rectOffsetLeft = getRandomNumber(5, canvasDimensions - rectWidth - 5);
+	// rectOffsetLeft = canvasMidpoint - (rectWidth / 2);
+	rectOffsetTop = 5;
+	rectOffsetBottom = canvasDimensions - rectHeight;
 }
 
 function init() {
@@ -31,23 +35,22 @@ function init() {
 		// this is where we would import a certain design with the canvas object passed through it
 		var ctx = canvas.getContext('2d');
 
-		ctx.strokeStyle = 'rgba(255, 255, 255, 1)';
-
-		// i dont know why the template literals dont work here
-		// ctx.fillStyle = 'rgba(255, 255, 255, ' + getRandomNumber(0.1, 0.3) + ')';
-		// ctx.fillStyle = gradient;
-
 		for (var i = 0; i < 10; i++) {
 			reset();
-			var gradient = ctx.createLinearGradient(squareOffsetLeft, squareOffsetBottom, squareWidth, squareWidth);
 
-			gradient.addColorStop(0, 'rgba(255, 255, 255, 0.5)');
-			gradient.addColorStop(1, 'rgba(0, 0, 0, 0.5)');
+			var gradient = ctx.createLinearGradient(rectOffsetLeft, rectOffsetBottom, rectWidth, rectHeight);
+
+			// why don't template literals work here?
+			gradient.addColorStop(0, 'rgba(135, 181, 196, 0.2)');
+			// gradient.addColorStop(1, 'rgba(0, 0, 0, ' + opacity + ')');
+			gradient.addColorStop(1, 'rgba(135, 181, 196, ' + opacity + ')');
 
 			ctx.fillStyle = gradient;
+			// the get random number opacity stuff should really be stored in a var also
+			ctx.strokeStyle = 'rgba(135, 181, 196, ' + opacity + ')';
 
-			ctx.fillRect(squareOffsetLeft, squareOffsetBottom, squareWidth, squareWidth);
-			ctx.strokeRect(squareOffsetLeft, squareOffsetBottom, squareWidth, squareWidth);
+			ctx.fillRect(rectOffsetLeft, rectOffsetBottom, rectWidth, rectHeight);
+			// ctx.strokeRect(rectOffsetLeft, rectOffsetBottom, rectWidth, rectHeight);
 		}
 	}
 }
