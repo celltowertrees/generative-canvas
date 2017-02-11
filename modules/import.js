@@ -7,11 +7,7 @@ let squareWidth,
 	squareOffsetTop,
 	squareOffsetBottom,
 	canvasDimensions = 500,
-	canvasMidpoint = canvasDimensions / 2,
-	x1,
-	y1,
-	x2,
-	y2;
+	canvasMidpoint = canvasDimensions / 2;
 
 function getRandomNumber(min, max) {
 	return Math.random() * (max - min) + min;
@@ -23,10 +19,6 @@ function reset() {
 	// squareOffsetLeft = canvasMidpoint - (squareWidth / 2);
 	squareOffsetTop = 5;
 	squareOffsetBottom = canvasDimensions - squareWidth;
-	x1 = squareOffsetLeft;
-	y1 = squareOffsetBottom;
-	x2 = squareWidth;
-	y2 = squareWidth;
 }
 
 function init() {
@@ -44,7 +36,12 @@ function init() {
 
 		for (var i=0; i < 10; i++) {
 			reset();
-			let gradient = ctx.createLinearGradient(x1, y1, x2, y2);
+			let gradient = ctx.createLinearGradient(
+				squareOffsetLeft,
+				squareOffsetBottom,
+				squareWidth,
+				squareWidth
+			);
 
 			gradient.addColorStop(0, 'rgba(255, 255, 255, 0.5)');
 			gradient.addColorStop(1, 'rgba(0, 0, 0, 0.5)');
