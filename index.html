@@ -8,11 +8,22 @@
 			#canvas {
 				display: block;
 				margin: 0 auto;
+				border-radius: 50%;
+				border: #fff 2px solid;
+				background-image: linear-gradient(#D7EFF5, #FF744A);
 			}
+
+			.reload {
+				display: inline-block;
+				text-align: center;
+				cursor: pointer;
+			}
+
 		</style>
 	</head>
 	<body>
-		<canvas id="canvas" height="500" width="800"></canvas>
+		<canvas id="canvas" height="200" width="200"></canvas>
+		<span class="reload">&#8634;</span>
 	</body>
 	<script src="dist/module.js" type="text/javascript"></script>
 </html>

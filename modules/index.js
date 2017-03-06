@@ -2,11 +2,20 @@
 import Towers from './towers';
 
 const options = {
-	elements: 100,
-	canvasHeight: 500,
-	canvasWidth: 800
-};
+		elements: 50,
+		canvasHeight: 200,
+		canvasWidth: 200
+	},
+	towers = new Towers(options);
 
-const towers = new Towers(options);
+document.addEventListener('DOMContentLoaded', () => {
+	const reload = document.getElementsByClassName('reload')[0];
 
-towers.init();
+	function init() {
+		towers.init(function () {
+			window.requestAnimationFrame(init);
+		});
+	}
+	window.requestAnimationFrame(init);
+});
+

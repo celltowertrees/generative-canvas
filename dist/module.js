@@ -8,14 +8,22 @@ var _towers = require('./towers');
 var _towers2 = _interopRequireDefault(_towers);
 
 var options = {
-	elements: 100,
-	canvasHeight: 500,
-	canvasWidth: 800
-};
+	elements: 50,
+	canvasHeight: 200,
+	canvasWidth: 200
+},
+    towers = new _towers2['default'](options);
 
-var towers = new _towers2['default'](options);
+document.addEventListener('DOMContentLoaded', function () {
+	var reload = document.getElementsByClassName('reload')[0];
 
-towers.init();
+	function init() {
+		towers.init(function () {
+			window.requestAnimationFrame(init);
+		});
+	}
+	window.requestAnimationFrame(init);
+});
 
 },{"./towers":2}],2:[function(require,module,exports){
 'use strict';
@@ -42,18 +50,21 @@ var Towers = (function () {
 	Towers.prototype.reset = function reset() {
 		this.opacity = this.getRandomNumber(1, 0.7);
 		this.rectWidth = this.getRandomNumber(10, 100);
-		this.rectHeight = this.getRandomNumber(10, this.opts.canvasHeight - 5);
+		this.rectHeight = this.getRandomNumber(10, this.opts.canvasHeight - 50);
 		this.rectOffsetLeft = this.getRandomNumber(5, this.opts.canvasWidth - this.rectWidth - 5);
 		this.rectOffsetTop = 5;
 		this.rectOffsetBottom = this.opts.canvasHeight - this.rectHeight;
 	};
 
-	Towers.prototype.init = function init() {
+	Towers.prototype.init = function init(callback) {
 		this.canvas = document.getElementById('canvas');
 
 		if (this.canvas.getContext) {
 			// this is where we would import a certain design with the canvas object passed through it
 			var ctx = canvas.getContext('2d');
+
+			// ensure a clean slate
+			ctx.clearRect(0, 0, this.opts.canvasWidth, this.opts.canvasHeight);
 
 			for (var i = 0; i < this.opts.elements; i++) {
 				this.reset();
@@ -69,10 +80,10 @@ var Towers = (function () {
 				ctx.strokeStyle = 'rgba(255, 255, 255, ' + this.opacity + ')';
 
 				ctx.fillRect(this.rectOffsetLeft, this.rectOffsetBottom, this.rectWidth, this.rectHeight);
-
-				ctx.strokeRect(this.rectOffsetLeft, this.rectOffsetBottom, this.rectWidth, this.rectHeight);
 			}
 		}
+
+		callback();
 	};
 
 	return Towers;
